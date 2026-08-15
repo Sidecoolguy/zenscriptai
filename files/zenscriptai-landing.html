@@ -289,6 +289,12 @@
   .progress-fill { height: 100%; width: 0%; border-radius: 100px; background: var(--grad); transition: width .32s ease; box-shadow: 0 0 16px rgba(0,229,255,.5); }
   .cur-step { font-family: var(--font-mono); font-size: .9rem; color: var(--cyan); min-height: 1.5em; }
   .gen-result { background: #0a101f; border: 1px solid var(--border-strong); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  .result-success { display: flex; align-items: center; gap: 8px; padding: 11px 16px; background: rgba(52,245,168,.09); border-bottom: 1px solid var(--border); color: var(--green); font-family: var(--font-sub); font-weight: 700; letter-spacing: .4px; font-size: .86rem; }
+  .result-success .ok { color: var(--green); }
+  .gen-empty { background: var(--card); border: 1px dashed var(--border-strong); border-radius: var(--radius); padding: 34px 26px; text-align: center; color: var(--muted); }
+  .gen-empty .gen-empty-ico { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; background: var(--grad-soft); border: 1px solid rgba(0,229,255,.25); }
+  .gen-empty h3 { font-family: var(--font-display); font-size: 1.05rem; color: var(--text); margin-bottom: 6px; }
+  .gen-empty p { font-size: .9rem; }
   .result-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 13px 16px; background: #0d1526; border-bottom: 1px solid var(--border); }
   .result-name { font-family: var(--font-mono); font-size: .86rem; color: var(--green); font-weight: 600; }
   .fp-chip { font-family: var(--font-mono); font-size: .72rem; color: var(--cyan); border: 1px solid rgba(0,229,255,.3); padding: 3px 10px; border-radius: 100px; }
@@ -525,24 +531,30 @@
       </div>
 
       <div class="gen-out reveal d2">
+        <div class="gen-empty" id="genEmpty">
+          <div class="gen-empty-ico">📄</div>
+          <h3>Your generated script will appear here.</h3>
+          <p>Configure your settings above and click Generate.</p>
+        </div>
         <div class="gen-status hidden" id="genStatus">
           <div class="status-label">ZenScriptsAI Engine</div>
           <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
           <div class="cur-step" id="curStep">Initializing…</div>
         </div>
         <div class="gen-result hidden" id="genResult">
+          <div class="result-success"><span class="ok">✓</span> Script generated successfully</div>
           <div class="result-head">
             <span class="result-name" id="resultName">script.gpc</span>
             <span class="fp-chip" id="fpChip">ZS-0000-0000</span>
             <div class="result-actions">
-              <button class="btn btn-ghost btn-mini" id="copyBtn" title="Copy to clipboard">📋 Copy</button>
+              <button class="btn btn-ghost btn-mini" id="copyBtn" title="Copy to clipboard">📋 Copy Script</button>
               <button class="btn btn-primary btn-mini" id="dlBtn" title="Download .gpc file">⬇ Download .gpc</button>
               <button class="btn btn-ghost btn-mini" id="regenBtn" title="Regenerate">↻</button>
             </div>
           </div>
           <pre class="script-output" id="scriptOutput"></pre>
           <div class="stat-chips">
-            <span class="stat-chip" id="statLines">0 lines</span>
+            <span class="stat-chip" id="statLines">—</span>
             <span class="stat-chip" id="statTime">—</span>
             <span class="stat-chip hidden" id="statModel"></span>
             <span class="stat-chip">100% original</span>
@@ -553,14 +565,14 @@
         <div class="gen-error hidden" id="genError">
           <div class="err-ico">⚠️</div>
           <h3>Generation failed</h3>
-          <p id="errMsg">Something went wrong.</p>
+          <p id="errMsg">We couldn't generate your script this time.</p>
           <details id="errDetails">
             <summary>Technical details</summary>
             <pre id="errDetailText"></pre>
           </details>
           <div class="err-actions">
-            <button class="btn btn-primary btn-mini" id="errRetry">Retry</button>
-            <button class="btn btn-ghost btn-mini" id="errOffline">Use offline engine</button>
+            <button class="btn btn-primary btn-mini" id="errRetry">Try Again</button>
+            <button class="btn btn-ghost btn-mini" id="errOffline">Use Offline Generator</button>
           </div>
         </div>
         <p class="gen-out-note">Every script is generated fresh from your inputs — unique fingerprint, no templates, no copyright issues.</p>
@@ -1121,6 +1133,7 @@
       genStart = performance.now();
       const btn = $("genBtn");
       btn.disabled = true;
+      $("genEmpty").classList.add("hidden");
       $("genError").classList.add("hidden");
       $("genResult").classList.add("hidden");
       const status = $("genStatus");
@@ -1132,6 +1145,7 @@
         $("genResult").classList.remove("hidden");
       } catch (err) {
         status.classList.add("hidden");
+        $("genEmpty").classList.add("hidden");
         showError(err && err.message ? err.message : String(err));
       } finally {
         busy = false;
@@ -1269,7 +1283,6 @@
     }
 
     function showError(message) {
-      $("errMsg").textContent = message;
       $("errDetailText").textContent = message;
       $("errDetails").open = false;
       $("genError").classList.remove("hidden");
