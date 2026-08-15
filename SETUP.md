@@ -18,7 +18,7 @@ node server.js              # → http://localhost:3000
 |-----------------|-------------------------|----------------------------------------------------|
 | `LLM_API_KEY`   | *(fallback: OPENAI_API_KEY)* | API key for an OpenAI-compatible provider    |
 | `LLM_BASE_URL`  | `https://api.openai.com/v1` | OpenAI, OpenRouter, Groq, DeepSeek, ...       |
-| `LLM_MODEL`     | `gpt-4o-mini`           | Model name                                          |
+| `LLM_MODEL`     | `gemini-2.0-flash`           | Model name                                          |
 | `PORT`          | `3000`                  | Server port (Render sets this automatically)        |
 | `STRIPE_SECRET_KEY` | —                  | Stripe API key — enables real checkout (`/api/pay`) |
 | `STRIPE_PRICE_ID`   | —                  | Recurring price ID from the Stripe dashboard        |

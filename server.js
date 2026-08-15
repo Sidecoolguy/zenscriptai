@@ -7,7 +7,7 @@
 //  Environment variables:
 //    LLM_API_KEY or OPENAI_API_KEY   required for /api/generate
 //    LLM_BASE_URL                    default https://api.openai.com/v1
-//    LLM_MODEL                       default gpt-4o-mini
+//    LLM_MODEL                       default gemini-2.0-flash
 //    PORT                            default 3000
 //
 //  Run:  node server.js   →  http://localhost:3000
