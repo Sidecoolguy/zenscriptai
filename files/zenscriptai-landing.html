@@ -477,10 +477,7 @@
           <label for="genPlatform">Platform</label>
           <select id="genPlatform">
             <option value="ps5">PlayStation 5</option>
-            <option value="ps4">PlayStation 4</option>
             <option value="xb1">Xbox Series X|S / One</option>
-            <option value="sw">Nintendo Switch</option>
-            <option value="pc">PC (XInput)</option>
           </select>
         </div>
         <div class="form-row">
@@ -928,13 +925,7 @@
     const PLATFORMS = {
       ps5: { label: "PlayStation 5", include: "ps5.gph", adsDefault: "PS4_L2", sprint: "PS4_L3", jump: "PS4_CROSS",
         buttons: [["PS4_R2", "R2"], ["PS4_R1", "R1"], ["PS4_L2", "L2"], ["PS4_L1", "L1"], ["PS4_CROSS", "Cross"], ["PS4_SQUARE", "Square"], ["PS4_TRIANGLE", "Triangle"], ["PS4_CIRCLE", "Circle"]] },
-      ps4: { label: "PlayStation 4", include: "ps4.gph", adsDefault: "PS4_L2", sprint: "PS4_L3", jump: "PS4_CROSS",
-        buttons: [["PS4_R2", "R2"], ["PS4_R1", "R1"], ["PS4_L2", "L2"], ["PS4_L1", "L1"], ["PS4_CROSS", "Cross"], ["PS4_SQUARE", "Square"], ["PS4_TRIANGLE", "Triangle"], ["PS4_CIRCLE", "Circle"]] },
       xb1: { label: "Xbox Series X|S / One", include: "xb1.gph", adsDefault: "XB1_LT", sprint: "XB1_LS", jump: "XB1_A",
-        buttons: [["XB1_RT", "RT"], ["XB1_RB", "RB"], ["XB1_LT", "LT"], ["XB1_LB", "LB"], ["XB1_A", "A"], ["XB1_X", "X"], ["XB1_Y", "Y"], ["XB1_B", "B"]] },
-      sw: { label: "Nintendo Switch", include: "switch.gph", adsDefault: "SW_ZL", sprint: "SW_LCLICK", jump: "SW_A",
-        buttons: [["SW_ZR", "ZR"], ["SW_R", "R"], ["SW_ZL", "ZL"], ["SW_L", "L"], ["SW_A", "A"], ["SW_B", "B"], ["SW_X", "X"], ["SW_Y", "Y"]] },
-      pc: { label: "PC (XInput)", include: "xb1.gph", adsDefault: "XB1_LT", sprint: "XB1_LS", jump: "XB1_A",
         buttons: [["XB1_RT", "RT"], ["XB1_RB", "RB"], ["XB1_LT", "LT"], ["XB1_LB", "LB"], ["XB1_A", "A"], ["XB1_X", "X"], ["XB1_Y", "Y"], ["XB1_B", "B"]] }
     };
 
