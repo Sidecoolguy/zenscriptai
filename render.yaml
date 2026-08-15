@@ -1,0 +1,16 @@
+# Render Blueprint — one-click deploy of the full backend.
+# Import this repo with "New → Blueprint" (or deploy server.js as a Web Service).
+services:
+  - type: web
+    name: zenscriptai
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: ""
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: LLM_API_KEY
+        sync: false          # you'll be prompted to enter it
+      - key: LLM_MODEL
+        value: gpt-4o-mini
