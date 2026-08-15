@@ -589,7 +589,7 @@
             <span class="stat-chip hidden" id="statModel"></span>
             <span class="stat-chip">100% original</span>
             <span class="stat-chip">GPC · compiles with Zen Studio</span>
-            <span class="stat-chip warn-chip hidden" id="warnChip">⚠ AI backend unavailable — offline engine used</span>
+            <span class="stat-chip warn-chip hidden" id="warnChip">⚠ Offline engine used — AI unavailable or script failed validation</span>
           </div>
         </div>
         <div class="gen-error hidden" id="genError">
@@ -1154,13 +1154,9 @@
       if (mods.size) {
         L.push("    // ── Size Adjusters (Premium) ──");
         L.push("    if (get_val(ADS_BTN) && get_val(STICK_2_X) == 0 && get_val(STICK_2_Y) == 0) {");
-        L.push("        set_val(STICK_2_X, SIZE_ADJUST);");
-        L.push("        wait(4);");
-        L.push("        set_val(STICK_2_X, 0);");
-        L.push("        wait(4);");
-        L.push("        set_val(STICK_2_Y, SIZE_ADJUST);");
-        L.push("        wait(4);");
-        L.push("        set_val(STICK_2_Y, 0);");
+        L.push("        if (!combo_running(SIZE_ADJUST)) { combo_run(SIZE_ADJUST); }");
+        L.push("    } else if (combo_running(SIZE_ADJUST)) {");
+        L.push("        combo_stop(SIZE_ADJUST);");
         L.push("    }");
       }
       if (mods.correction) {
@@ -1175,9 +1171,9 @@
       if (mods.rapid) {
         L.push("combo RAPID_FIRE {");
         L.push("    set_val(FIRE_BTN, 100);");
-        L.push("    wait(RAPID_DELAY);");
+        L.push("    wait(" + half + ");");
         L.push("    set_val(FIRE_BTN, 0);");
-        L.push("    wait(RAPID_DELAY);");
+        L.push("    wait(" + half + ");");
         L.push("}");
         L.push("");
       }
@@ -1195,6 +1191,19 @@
         L.push("    wait(180);");
         L.push("    set_val(STICK_1_X, STRAFE_SPEED);");
         L.push("    wait(180);");
+        L.push("}");
+        L.push("");
+      }
+      if (mods.size) {
+        L.push("combo SIZE_ADJUST {");
+        L.push("    set_val(STICK_2_X, SIZE_ADJUST);");
+        L.push("    wait(4);");
+        L.push("    set_val(STICK_2_X, 0);");
+        L.push("    wait(4);");
+        L.push("    set_val(STICK_2_Y, SIZE_ADJUST);");
+        L.push("    wait(4);");
+        L.push("    set_val(STICK_2_Y, 0);");
+        L.push("    wait(4);");
         L.push("}");
         L.push("");
       }
@@ -1359,7 +1368,7 @@
         fp: data.fp || "ZS-0000-0000",
         lines: data.code.split("\n").length,
         model: data.model || "",
-        fallback: false
+        fallback: !!data.fallback
       };
     }
 

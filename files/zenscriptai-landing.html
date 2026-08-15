@@ -550,7 +550,7 @@
             <span class="stat-chip hidden" id="statModel"></span>
             <span class="stat-chip">100% original</span>
             <span class="stat-chip">GPC · compiles with Zen Studio</span>
-            <span class="stat-chip warn-chip hidden" id="warnChip">⚠ AI backend unavailable — offline engine used</span>
+            <span class="stat-chip warn-chip hidden" id="warnChip">⚠ Offline engine used — AI unavailable or script failed validation</span>
           </div>
         </div>
         <div class="gen-error hidden" id="genError">
@@ -1080,9 +1080,9 @@
       if (mods.rapid) {
         L.push("combo RAPID_FIRE {");
         L.push("    set_val(FIRE_BTN, 100);");
-        L.push("    wait(RAPID_DELAY);");
+        L.push("    wait(" + half + ");");
         L.push("    set_val(FIRE_BTN, 0);");
-        L.push("    wait(RAPID_DELAY);");
+        L.push("    wait(" + half + ");");
         L.push("}");
         L.push("");
       }
@@ -1250,7 +1250,7 @@
         fp: data.fp || "ZS-0000-0000",
         lines: data.code.split("\n").length,
         model: data.model || "",
-        fallback: false
+        fallback: !!data.fallback
       };
     }
 
