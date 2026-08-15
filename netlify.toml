@@ -1,0 +1,25 @@
+# Netlify configuration
+[build]
+  publish = "files"             # serve the landing page from the repo root
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Expose the generation function at the same path the page calls (relative /api/generate)
+[[redirects]]
+  from = "/api/generate"
+  to = "/.netlify/functions/generate"
+  status = 200
+
+# Expose the payments function at the same path the page calls (relative /api/pay)
+[[redirects]]
+  from = "/api/pay"
+  to = "/.netlify/functions/pay"
+  status = 200
+
+# Expose the accounts function at the same path the page calls (relative /api/auth)
+[[redirects]]
+  from = "/api/auth"
+  to = "/.netlify/functions/auth"
+  status = 200
